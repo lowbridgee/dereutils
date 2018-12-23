@@ -17,10 +17,11 @@ func main() {
 
 	app.Commands = []cli.Command{
 		{
-			Name: "unit",
-			Usage: "find unit",
+			Name: "find_unit",
+			Usage: "Find unit name by idol name.",
 			Action: func(c *cli.Context) error {
-				res := findUnitByMemberName(os.Args[2])
+				name := os.Args[2]
+				res := findUnitByMemberName(name)
 				m := res.Results.Bindings
 				for _, v := range m {
 					println(v["ユニット名"].Value)

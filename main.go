@@ -4,8 +4,9 @@ import (
 	"bytes"
 	"log"
 	"os"
-	"github.com/urfave/cli"
+
 	"github.com/knakk/sparql"
+	"github.com/urfave/cli"
 )
 
 func main() {
@@ -17,7 +18,7 @@ func main() {
 
 	app.Commands = []cli.Command{
 		{
-			Name: "find_unit",
+			Name:  "find_unit",
 			Usage: "Find unit name by idol name.",
 			Action: func(c *cli.Context) error {
 				res := findUnitByMemberName(os.Args[2])
@@ -29,7 +30,7 @@ func main() {
 			},
 		},
 		{
-			Name: "grep",
+			Name:  "find_idol",
 			Usage: "Find idol by idol name.",
 			Action: func(c *cli.Context) error {
 				res := findIdolByName(os.Args[2])
@@ -75,15 +76,15 @@ func findUnitByMemberName(name string) *sparql.Results {
 	  ?m schema:name ?名前.
 	  filter contains (?名前, "{{.Name}}").
 	}group by (?ユニット名) order by(?ユニット名)`
-	
+
 	f := bytes.NewBufferString(query)
 	bank := sparql.LoadBank(f)
-	
+
 	sql, err := bank.Prepare("find-unit-by-member-idol", struct{ Name string }{name})
 	if err != nil {
 		log.Fatal(err)
 	}
-	
+
 	res, err := repo.Query(sql)
 	if err != nil {
 		log.Fatal(err)
@@ -118,12 +119,12 @@ func findIdolByName(name string) *sparql.Results {
 	}`
 	f := bytes.NewBufferString(query)
 	bank := sparql.LoadBank(f)
-	
+
 	sql, err := bank.Prepare("find-idol-by-name", struct{ Name string }{name})
 	if err != nil {
 		log.Fatal(err)
 	}
-	
+
 	res, err := repo.Query(sql)
 	if err != nil {
 		log.Fatal(err)

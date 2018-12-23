@@ -2,6 +2,16 @@
 
 [im@sparql](https://sparql.crssnky.xyz/imas/)のcli
 
+# Install
+
+## require
+
+- go version 1.11.x
+
+```
+go get "github.com/lowbridgee/dereutils"
+```
+
 # Usage
 
 ```
